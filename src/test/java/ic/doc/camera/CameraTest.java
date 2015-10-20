@@ -11,7 +11,9 @@ public class CameraTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
     final Sensor sensor = context.mock(Sensor.class);
-    Camera camera = new Camera(sensor);
+    final MemoryCard mem = context.mock(MemoryCard.class);
+    Camera camera = new Camera(sensor,mem);
+    byte[] datas = new byte[10];
 
     @Test
     public void switchingTheCameraOnPowersUpTheSensor() {
@@ -30,7 +32,17 @@ public class CameraTest {
             exactly(1).of(sensor).powerDown();
         }} );
         camera.powerOff();
-        // write your test here
+    }
+
+    @Test
+    public void pressingShutterWhenPowerOn(){
+        context.checking(new Expectations() {{
+            exactly(1).of(sensor).readData();will(returnValue(datas));
+            exactly(1).of(sensor).powerUp();
+            exactly(1).of(mem).write(datas);
+        }} );
+        camera.powerOn();
+        camera.pressShutter();
     }
 
 }
