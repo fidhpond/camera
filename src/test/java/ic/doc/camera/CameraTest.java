@@ -12,7 +12,7 @@ public class CameraTest {
 
     final Sensor sensor = context.mock(Sensor.class);
     final MemoryCard mem = context.mock(MemoryCard.class);
-    Camera camera = new Camera(sensor,mem);
+    Camera camera = new Camera(sensor, mem);
     byte[] datas = new byte[10];
 
     @Test
@@ -20,7 +20,7 @@ public class CameraTest {
 
         context.checking(new Expectations() {{
             exactly(1).of(sensor).powerUp();
-        }} );
+        }});
         camera.powerOn();
          // write your test here
     }
@@ -43,7 +43,7 @@ public class CameraTest {
             exactly(1).of(sensor).powerUp();
             exactly(1).of(sensor).powerDown();
             never(sensor).readData();
-        }} );
+        }});
         camera.powerOn();
         camera.powerOff();
         camera.pressShutter();

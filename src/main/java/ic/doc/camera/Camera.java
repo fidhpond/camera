@@ -24,7 +24,7 @@ public class Camera implements WriteListener{
     }
 
     public void powerOff() {
-        if(writeCompleted == true){
+        if(writeCompleted){
             sensor.powerDown();
         }
         powerOn = false;
@@ -33,7 +33,7 @@ public class Camera implements WriteListener{
     @Override
     public void writeComplete() {
         writeCompleted = true;
-        if(powerOn == false){
+        if(!powerOn){
             sensor.powerDown();
         }
     }
